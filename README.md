@@ -7,3 +7,4 @@ Features:
 - Global and project-specific config. Keep sensible defaults system-wide, with per-project overrides
 - Supports CSS modules, styled-components, Aphrodite, and more!
 - Supports Components, PureComponents, and Stateless Functional Components.
+- Prettier support!
