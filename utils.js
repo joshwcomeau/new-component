@@ -31,3 +31,14 @@ module.exports.readFileRelative = fileLocation => (
     });
   })
 );
+
+module.exports.writeFileRelative = (fileLocation, fileContents) => (
+  new Promise((resolve, reject) => {
+    fs.writeFile(
+      path.join(__dirname, fileLocation),
+      fileContents,
+      'utf-8',
+      (err, text) => err ? reject(err) : resolve(text)
+    )
+  })
+);
