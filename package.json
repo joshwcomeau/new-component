@@ -17,5 +17,8 @@
     "aphrodite"
   ],
   "author": "Joshua Comeau",
-  "license": "MIT"
+  "license": "MIT",
+  "bin": {
+    "add-component": "./index.js"
+  }
 }
