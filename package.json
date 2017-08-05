@@ -1,0 +1,21 @@
+{
+  "name": "add-component",
+  "version": "0.0.1",
+  "description": "CLI for creating new React components",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "reactjs",
+    "cli",
+    "component",
+    "css",
+    "styled-components",
+    "emotion",
+    "aphrodite"
+  ],
+  "author": "Joshua Comeau",
+  "license": "MIT"
+}
