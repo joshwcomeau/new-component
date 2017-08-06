@@ -4,12 +4,19 @@ const fs = require('fs');
 const program = require('commander');
 
 const {
+  getConfig,
+  buildPrettifier,
+  logIntro,
+  logItemCompletion,
+  logConclusion,
+} = require('./helpers');
+const {
   requireOptional,
   mkDirPromise,
   readFilePromiseRelative,
   writeFilePromise,
 } = require('./utils');
-const { getConfig, buildPrettifier } = require('./helpers');
+
 
 // Load our package.json, so that we can pass the version onto `commander`.
 const { version } = require('../package.json');
@@ -21,6 +28,7 @@ const config = getConfig();
 // Convenience wrapper around Prettier, so that config doesn't have to be
 // passed every time.
 const prettify = buildPrettifier(config.prettierConfig);
+
 
 program
   .version(version)
@@ -55,11 +63,17 @@ const indexTemplate = prettify(`\
 export { default } from './${componentName}';
 `);
 
+logIntro({ name: componentName, dir: componentDir, type: program.type });
+
 // Start by creating the directory that our component lives in.
 mkDirPromise(componentDir)
   .then(() => (
     readFilePromiseRelative(templatePath)
   ))
+  .then(template => {
+    logItemCompletion('Directory created.');
+    return template;
+  })
   .then(template => (
     // Replace our placeholders with real data (so far, just the component name)
     template.replace(/COMPONENT_NAME/g, componentName)
@@ -68,10 +82,21 @@ mkDirPromise(componentDir)
     // Format it using prettier, to ensure style consistency, and write to file.
     writeFilePromise(filePath, prettify(template))
   ))
+  .then(template => {
+    logItemCompletion('Component built and saved to disk.');
+    return template;
+  })
   .then(template => (
     // We also need the `index.js` file, which allows easy importing.
     writeFilePromise(indexPath, prettify(indexTemplate))
   ))
+  .then(template => {
+    logItemCompletion('Index file built and saved to disk.');
+    return template;
+  })
+  .then(template => {
+    logConclusion();
+  })
   .catch(err => {
     console.error(err);
   })
