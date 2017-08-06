@@ -9,6 +9,10 @@ use `utils.js` instead.
 */
 const os = require('os');
 
+const prettier = require('prettier');
+
+const { requireOptional } = require('./utils');
+
 
 // Get the configuration for this component.
 // Overrides are as follows:

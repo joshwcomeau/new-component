@@ -24,7 +24,15 @@ module.exports.requireOptional = (filePath) => {
       throw e;
     }
   }
-}
+};
+
+module.exports.mkDirPromise = (dirPath) => (
+  new Promise((resolve, reject) => {
+    fs.mkdir(dirPath, (err) => {
+      err ? reject(err) : resolve();
+    });
+  })
+);
 
 // Simple promise wrappers for read/write files.
 // utf-8 is assumed.

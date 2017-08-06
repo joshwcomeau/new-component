@@ -2,17 +2,17 @@
 const fs = require('fs');
 
 const program = require('commander');
-const prettier = require('prettier');
 
 const {
   requireOptional,
+  mkDirPromise,
   readFilePromiseRelative,
   writeFilePromise,
 } = require('./utils');
 const { getConfig, buildPrettifier } = require('./helpers');
 
 // Load our package.json, so that we can pass the version onto `commander`.
-const { version } = require('./package.json');
+const { version } = require('../package.json');
 
 // Get the default config for this component (looks for local/global overrides,
 // falls back to sensible defaults).
@@ -40,23 +40,26 @@ program
     config.extension
   ).parse(process.argv);
 
-
 const [componentName] = program.args;
 
+// Find the path to the selected template file.
 const templatePath = `./templates/${program.type}.js`;
 
-// Create our new working directory.
+// Get all of our file paths worked out, for the user's project.
 const componentDir = `${program.dir}/${componentName}`;
-fs.mkdirSync(componentDir);
-
 const filePath = `${componentDir}/${componentName}.${program.extension}`;
-
 const indexPath = `${componentDir}/index.js`;
+
+// Our index template is super straightforward, so we'll just inline it for now.
 const indexTemplate = prettify(`\
 export { default } from './${componentName}';
 `);
 
-readFilePromiseRelative(templatePath)
+// Start by creating the directory that our component lives in.
+mkDirPromise(componentDir)
+  .then(() => (
+    readFilePromiseRelative(templatePath)
+  ))
   .then(template => (
     // Replace our placeholders with real data (so far, just the component name)
     template.replace(/COMPONENT_NAME/g, componentName)
