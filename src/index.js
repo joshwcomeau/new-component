@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-const os = require('os');
 const fs = require('fs');
 
 const program = require('commander');
@@ -10,24 +9,18 @@ const {
   readFilePromiseRelative,
   writeFilePromise,
 } = require('./utils');
+const { getConfig, buildPrettifier } = require('./helpers');
 
 // Load our package.json, so that we can pass the version onto `commander`.
 const { version } = require('./package.json');
 
-// Check to see if there are any global or local overrides.
-const home = os.homedir();
-const currentPath = process.cwd();
+// Get the default config for this component (looks for local/global overrides,
+// falls back to sensible defaults).
+const config = getConfig();
 
-const globalOverrides = requireOptional(`/${home}/.add-component.json`);
-const localOverrides = requireOptional(`/${currentPath}/.add-component.json`);
-
-const options = Object.assign({}, globalOverrides, localOverrides, {
-  type: 'class',
-  dir: 'src/components',
-  extension: 'js'
-});
-
-const prettify = text => prettier.format(text, options.prettierConfig);
+// Convenience wrapper around Prettier, so that config doesn't have to be
+// passed every time.
+const prettify = buildPrettifier(config.prettierConfig);
 
 program
   .version(version)
@@ -36,15 +29,15 @@ program
     '-t, --type <componentType>',
     'Type of React component to generate (default: "class")',
     /^(class|pureClass|functional)$/i,
-    options.type
+    config.type
   ).option(
     '-d, --dir <pathToDirectory>',
     'Path to the "components" directory (default: "src/components")',
-    options.dir
+    config.dir
   ).option(
     '-x, --extension <fileExtension>',
     'Which file extension to use for the component (default: "js")',
-    options.extension
+    config.extension
   ).parse(process.argv);
 
 
