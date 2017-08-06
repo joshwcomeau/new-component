@@ -10,11 +10,7 @@
     "react",
     "reactjs",
     "cli",
-    "component",
-    "css",
-    "styled-components",
-    "emotion",
-    "aphrodite"
+    "component"
   ],
   "author": "Joshua Comeau",
   "license": "MIT",
@@ -22,8 +18,8 @@
     "add-component": "./src/index.js"
   },
   "dependencies": {
-    "chalk": "^2.0.1",
-    "commander": "^2.11.0",
-    "prettier": "^1.5.3"
+    "chalk": "2.0.1",
+    "commander": "2.11.0",
+    "prettier": "1.5.3"
   }
 }
