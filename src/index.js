@@ -28,7 +28,7 @@ program
   .option(
     '-t, --type <componentType>',
     'Type of React component to generate (default: "class")',
-    /^(class|pureClass|functional)$/i,
+    /^(class|pure-class|functional)$/i,
     config.type
   ).option(
     '-d, --dir <pathToDirectory>',
