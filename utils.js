@@ -15,30 +15,28 @@ module.exports.requireOptional = (filePath) => {
   }
 }
 
-// Somewhat counter-intuitively, `fs.readFile` works relative to the current
-// working directory (if the user is in their own project, it's relative to
-// their project). This is unlike `require()` calls, which are always relative
-// to the code's directory.
-//
-// We want to open our various template files as text, so that we can modify
-// their contents. Because of this, we need this helper
-//
-// We'll also use promises, because why not.
-module.exports.readFileRelative = fileLocation => (
+// Simple promise wrappers for read/write files.
+// utf-8 is assumed.
+module.exports.readFilePromise = fileLocation => (
   new Promise((resolve, reject) => {
-    fs.readFile(path.join(__dirname, fileLocation), 'utf-8', (err, text) => {
+    fs.readFile(fileLocation, 'utf-8', (err, text) => {
       err ? reject(err) : resolve(text);
     });
   })
 );
 
-module.exports.writeFileRelative = (fileLocation, fileContents) => (
+module.exports.writeFilePromise = (fileLocation, fileContent) => (
   new Promise((resolve, reject) => {
-    fs.writeFile(
-      path.join(__dirname, fileLocation),
-      fileContents,
-      'utf-8',
-      (err, text) => err ? reject(err) : resolve(text)
-    )
+    fs.writeFile(fileLocation, fileContent, 'utf-8', (err) => {
+      err ? reject(err) : resolve();
+    });
   })
+);
+
+// Somewhat counter-intuitively, `fs.readFile` works relative to the current
+// working directory (if the user is in their own project, it's relative to
+// their project). This is unlike `require()` calls, which are always relative
+// to the code's directory.
+module.exports.readFilePromiseRelative = fileLocation => (
+  module.exports.readFilePromise(path.join(__dirname, fileLocation))
 );

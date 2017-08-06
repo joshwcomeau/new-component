@@ -7,8 +7,8 @@ const prettier = require('prettier');
 
 const {
   requireOptional,
-  readFileRelative,
-  writeFileRelative,
+  readFilePromiseRelative,
+  writeFilePromise,
 } = require('./utils');
 
 // Load our package.json, so that we can pass the version onto `commander`.
@@ -27,6 +27,8 @@ const options = Object.assign({}, globalOverrides, localOverrides, {
   extension: 'js'
 });
 
+const prettify = text => prettier.format(text, options.prettierConfig);
+
 program
   .version(version)
   .arguments('<componentName>')
@@ -35,11 +37,6 @@ program
     'Type of React component to generate (default: "class")',
     /^(class|pureClass|functional)$/i,
     options.type
-  ).option(
-    '-s, --style <style>',
-    'Type of styles to use (default: null)',
-    /^(css-modules|aphrodite|styled-components|emotion)$/i,
-    options.style
   ).option(
     '-d, --dir <pathToDirectory>',
     'Path to the "components" directory (default: "src/components")',
@@ -61,19 +58,24 @@ fs.mkdirSync(componentDir);
 
 const filePath = `${componentDir}/${componentName}.${program.extension}`;
 
+const indexPath = `${componentDir}/index.js`;
+const indexTemplate = prettify(`\
+export { default } from './${componentName}';
+`);
 
-readFileRelative(templatePath)
+readFilePromiseRelative(templatePath)
   .then(template => (
+    // Replace our placeholders with real data (so far, just the component name)
     template.replace(/COMPONENT_NAME/g, componentName)
   ))
   .then(template => (
-    prettier.format(template, options.prettierConfig)
+    // Format it using prettier, to ensure style consistency, and write to file.
+    writeFilePromise(filePath, prettify(template))
   ))
-  .then(template => new Promise((resolve, reject) => {
-    fs.writeFile(filePath, template, 'utf-8', (err) => {
-      err ? reject(err) : resolve();
-    })
-  }))
+  .then(template => (
+    // We also need the `index.js` file, which allows easy importing.
+    writeFilePromise(indexPath, prettify(indexTemplate))
+  ))
   .catch(err => {
     console.error(err);
   })
