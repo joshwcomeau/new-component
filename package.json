@@ -2,7 +2,7 @@
   "name": "add-component",
   "version": "0.0.1",
   "description": "CLI for creating new React components",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,7 +19,7 @@
   "author": "Joshua Comeau",
   "license": "MIT",
   "bin": {
-    "add-component": "./index.js"
+    "add-component": "./src/index.js"
   },
   "dependencies": {
     "chalk": "^2.0.1",

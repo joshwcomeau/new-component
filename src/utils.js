@@ -1,3 +1,14 @@
+/*
+Utils are general building blocks. Platform-specific, but not
+application-specific
+
+They're useful for abstracting away the configuration for native methods,
+or defining new convenience methods for things like working with files,
+data munging, etc.
+
+NOTE: Utils should be general enough to be useful in any Node application.
+For application-specific concerns, use `helpers.js`.
+*/
 const fs = require('fs');
 const path = require('path');
 
