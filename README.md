@@ -95,9 +95,11 @@ Control the type of component created:
 Legacy `createClass` components are not supported, although support would be easy to add. Feel free to open an issue (or a PR!).
 
 **Usage:**
-Command line: `--type <value>` or `-t <value>`
-JSON config: `{ "type": <value> }`
 
+Command line: `--type <value>` or `-t <value>`
+
+JSON config: `{ "type": <value> }`
+<br />
 
 ### Directory
 
@@ -106,16 +108,22 @@ Controls the desired directory for the created component. Defaults to `src/compo
 Legacy `createClass` components are not supported, although support would be easy to add. Feel free to open an issue (or a PR!).
 
 **Usage:**
+
 Command line: `--dir <value>` or `-d <value>`
+
 JSON config: `{ "dir": <value> }`
+<br />
 
 ### File Extension
 
 Controls the file extension for the created components. Can be either `js` (default) or `jsx`.
 
 **Usage:**
+
 Command line: `--extension <value>` or `-x <value>`
+
 JSON config: `{ "extension": <value> }`
+<br />
 
 ### Prettier Config
 
@@ -124,8 +132,11 @@ Delegate settings to Prettier, so that your new component is formatted as you'd 
 For a full list of options, see the [Prettier docs](https://github.com/prettier/prettier#options).
 
 **Usage:**
+
 Command line: N/A (Prettier config is only controllable through JSON)
+
 JSON config: `{ "prettierConfig": { "key": "value" } }`
+<br />
 
 **Example:**
 
@@ -137,11 +148,12 @@ JSON config: `{ "prettierConfig": { "key": "value" } }`
   }
 }
 ```
-
+<br />
 
 ## Platform Support
 This has only been tested in MacOS. I think it'd work fine in linux, but I haven't tested it. Windows is a big question mark (would welcome contribution here!).
 
+<br />
 
 ## TODO
 
