@@ -4,8 +4,8 @@
   <a href="https://www.npmjs.org/package/new-component"><img src="https://img.shields.io/npm/v/new-component.svg?style=flat" alt="npm"></a>
 </p>
 
-## `new-component`
-#### Simple, customizable utility for adding new React components to your project.
+# `new-component`
+### Simple, customizable utility for adding new React components to your project.
 
 <img src="https://github.com/joshwcomeau/new-component/blob/master/docs/divider@2x.png?raw=true" width="888" height="100" role="presentation">
 
@@ -14,7 +14,8 @@ Anyone else sick of writing the same component boilerplate, over and over?
 This project is a globally-installable CLI for adding new React components. It's dead simple to use, and requires no configuration, although it's easy to customize it to fit your project's coding style.
 
 <br />
-### Features
+
+## Features
 - Simple CLI interface for adding Component, PureComponent, or Stateless Functional components.
 - Uses [Prettier](https://github.com/prettier/prettier) to stylistically match the existing project.
 - Offers global config, which can be overridden on a project-by-project basis.
@@ -22,7 +23,8 @@ This project is a globally-installable CLI for adding new React components. It's
 
 
 <br />
-### Quickstart
+
+## Quickstart
 
 Install via NPM:
 
@@ -66,7 +68,8 @@ export default Button;
 
 
 <br />
-### Configuration
+
+## Configuration
 
 Configuration can be done through 3 different ways:
 
@@ -79,9 +82,10 @@ The resulting values are merged, with command-line values overwriting local valu
 
 
 <br />
-### API Reference
 
-##### Type
+## API Reference
+
+### Type
 
 Control the type of component created:
 - `class` for a traditional Component class (default),
@@ -95,7 +99,7 @@ Command line: `--type <value>` or `-t <value>`
 JSON config: `{ "type": <value> }`
 
 
-##### Directory
+### Directory
 
 Controls the desired directory for the created component. Defaults to `src/components`
 
@@ -105,7 +109,7 @@ Legacy `createClass` components are not supported, although support would be eas
 Command line: `--dir <value>` or `-d <value>`
 JSON config: `{ "dir": <value> }`
 
-##### File Extension
+### File Extension
 
 Controls the file extension for the created components. Can be either `js` (default) or `jsx`.
 
@@ -113,7 +117,7 @@ Controls the file extension for the created components. Can be either `js` (defa
 Command line: `--extension <value>` or `-x <value>`
 JSON config: `{ "extension": <value> }`
 
-##### Prettier Config
+### Prettier Config
 
 Delegate settings to Prettier, so that your new component is formatted as you'd like. Defaults to Prettier defaults.
 
@@ -135,11 +139,11 @@ JSON config: `{ "prettierConfig": { "key": "value" } }`
 ```
 
 
-### Platform Support
+## Platform Support
 This has only been tested in MacOS. I think it'd work fine in linux, but I haven't tested it. Windows is a big question mark (would welcome contribution here!).
 
 
-### TODO
+## TODO
 
 This is a brand new thing! I'd like to add more functionality:
 
