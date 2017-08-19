@@ -1,5 +1,5 @@
 {
-  "name": "add-component",
+  "name": "new-component",
   "version": "0.0.1",
   "description": "CLI for creating new React components",
   "main": "src/index.js",
@@ -15,7 +15,7 @@
   "author": "Joshua Comeau",
   "license": "MIT",
   "bin": {
-    "add-component": "./src/index.js"
+    "new-component": "./src/index.js"
   },
   "dependencies": {
     "chalk": "2.0.1",

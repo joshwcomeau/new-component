@@ -34,9 +34,9 @@ module.exports.getConfig = () => {
     extension: 'js'
   };
 
-  const globalOverrides = requireOptional(`/${home}/.add-component.json`);
+  const globalOverrides = requireOptional(`/${home}/.new-component-config.json`);
 
-  const localOverrides = requireOptional(`/${currentPath}/.add-component.json`);
+  const localOverrides = requireOptional(`/${currentPath}/.new-component-config.json`);
 
 
   return Object.assign({}, globalOverrides, localOverrides, defaults);
@@ -89,6 +89,6 @@ module.exports.logItemCompletion = (successText) => {
 module.exports.logConclusion = () => {
   console.info('\n');
   console.info(chalk.bold.rgb(...colors.green)('Component created! 🚀 '));
-  console.info(chalk.rgb(...colors.mediumGray)('Thanks for using add-component.'));
+  console.info(chalk.rgb(...colors.mediumGray)('Thanks for using new-component.'));
   console.info('\n');
 }
