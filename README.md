@@ -1,11 +1,11 @@
-<div style="text-align:center">
-![New Component](./logo.png)
+<p align="center">
+  <img src="https://github.com/joshwcomeau/new-component/blob/master/docs/logo.png?raw=true" width="285" height="285" alt="new-component">
+  <br>
+  <a href="https://www.npmjs.org/package/new-component"><img src="https://img.shields.io/npm/v/new-component.svg?style=flat" alt="npm"></a>
+</p>
 
-[![npm version](https://img.shields.io/npm/v/react-flip-move.svg)](https://www.npmjs.com/package/react-flip-move)
-
-<h1>`new-component`</h1>
-<h3>Simple, customizable utility for adding new React components to your project.</h3>
-</div>
+# `new-component`
+### Simple, customizable utility for adding new React components to your project.
 
 ------
 
@@ -35,7 +35,7 @@ $ npm i -g new-component
 `cd` into your project's directory, and try creating a new component:
 
 <center>
-![demo](./demo.gif)
+![demo](https://github.com/joshwcomeau/new-component/blob/master/docs/demo.gif?raw=true)
 </center>
 
 Your project will now have a new directory at `src/components/SomeComponentName`. This directory has two files:
