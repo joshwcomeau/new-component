@@ -1,5 +1,13 @@
-# `add-component`
-### Simple, customizable utility for adding new React components to your project.
+<div style="text-align:center">
+![New Component](./logo.png)
+
+[![npm version](https://img.shields.io/npm/v/react-flip-move.svg)](https://www.npmjs.com/package/react-flip-move)
+
+<h1>`new-component`</h1>
+<h3>Simple, customizable utility for adding new React components to your project.</h3>
+</div>
+
+------
 
 Anyone else sick of writing the same component boilerplate, over and over?
 
@@ -17,23 +25,27 @@ This project is a globally-installable CLI for adding new React components. It's
 Install via NPM:
 
 ```bash
-$ npm i -g add-component
+# Using Yarn:
+$ yarn global add new-component
+
+# or, using NPM
+$ npm i -g new-component
 ```
 
-`cd` into your project's directory, try creating a new component:
+`cd` into your project's directory, and try creating a new component:
 
-```bash
-$ add-component SomeComponentName
-```
+<center>
+![demo](./demo.gif)
+</center>
 
 Your project will now have a new directory at `src/components/SomeComponentName`. This directory has two files:
 
-```js
+```jsx
 // `SomeComponentName/index.js`
 export { default } from './SomeComponentName';
 ```
 
-```js
+```jsx
 // `SomeComponentName/SomeComponentName.js`
 import React, { Component } from 'react';
 
@@ -48,7 +60,7 @@ export default SomeComponentName;
 
 > This structure might appear odd to you, with an `index.js` that points to a named file. I've found this to be an optimal way to set up components; the `index.js` allows you to `import` from the directory (eg. `import SomeComponentName from 'components/SomeComponentName'`), while having `SomeComponentName.js` means that you're never lost in a sea of `index.js` files in your editor.
 >
-> This structure is not currently configurable, but I'm happy to consider implementing alternatives.
+> This structure is not currently configurable, but I'm happy to consider implementing alternatives!
 
 
 
@@ -56,8 +68,8 @@ export default SomeComponentName;
 
 Configuration can be done through 3 different ways:
 
-- Creating a global `.add-component-config.json` in your home directory (`~/.add-component-config.json`).
-- Creating a local `.add-component-config.json` in your project's root directory.
+- Creating a global `.new-component-config.json` in your home directory (`~/.new-component-config.json`).
+- Creating a local `.new-component-config.json` in your project's root directory.
 - Command-line arguments.
 
 The resulting values are merged, with command-line values overwriting local values, and local values overwriting global ones.
@@ -118,7 +130,7 @@ JSON config: `{ "prettierConfig": { "key": "value" } }`
 
 
 ### Platform Support
-This has only been tested in MacOS. I believe it'd work fine in linux distros, as well. Windows is a big question mark (would welcome contribution here!).
+This has only been tested in MacOS. I think it'd work fine in linux, but I haven't tested it. Windows is a big question mark (would welcome contribution here!).
 
 
 ### TODO
@@ -127,4 +139,4 @@ This is a brand new thing! I'd like to add more functionality:
 
 - Built-in support for common style tools (CSS modules, Aphrodite, styled-components, etc).
 - Better error messaging, more edge-case support
-- Editor integrations
+- Editor integrations :o
