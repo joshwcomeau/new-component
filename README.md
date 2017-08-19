@@ -13,6 +13,7 @@ Anyone else sick of writing the same component boilerplate, over and over?
 
 This project is a globally-installable CLI for adding new React components. It's dead simple to use, and requires no configuration, although it's easy to customize it to fit your project's coding style.
 
+<br />
 ### Features
 - Simple CLI interface for adding Component, PureComponent, or Stateless Functional components.
 - Uses [Prettier](https://github.com/prettier/prettier) to stylistically match the existing project.
@@ -20,6 +21,7 @@ This project is a globally-installable CLI for adding new React components. It's
 - Colourful terminal output!
 
 
+<br />
 ### Quickstart
 
 Install via NPM:
@@ -34,36 +36,36 @@ $ npm i -g new-component
 
 `cd` into your project's directory, and try creating a new component:
 
-<center>
-![demo](https://github.com/joshwcomeau/new-component/blob/master/docs/demo.gif?raw=true)
-</center>
+<p align="center">
+  <img src="https://github.com/joshwcomeau/new-component/blob/master/docs/demo.gif?raw=true" width="888" height="369" alt="demo of CLI functionality">
+</p>
 
-Your project will now have a new directory at `src/components/SomeComponentName`. This directory has two files:
+Your project will now have a new directory at `src/components/Button`. This directory has two files:
 
 ```jsx
-// `SomeComponentName/index.js`
-export { default } from './SomeComponentName';
+// `Button/index.js`
+export { default } from './Button';
 ```
 
 ```jsx
-// `SomeComponentName/SomeComponentName.js`
+// `Button/Button.js`
 import React, { Component } from 'react';
 
-class SomeComponentName extends Component {
+class Button extends Component {
   render() {
     return <div />;
   }
 }
 
-export default SomeComponentName;
+export default Button;
 ```
 
-> This structure might appear odd to you, with an `index.js` that points to a named file. I've found this to be an optimal way to set up components; the `index.js` allows you to `import` from the directory (eg. `import SomeComponentName from 'components/SomeComponentName'`), while having `SomeComponentName.js` means that you're never lost in a sea of `index.js` files in your editor.
+> This structure might appear odd to you, with an `index.js` that points to a named file. I've found this to be an optimal way to set up components; the `index.js` allows you to `import` from the directory (eg. `import Button from 'components/Button'`), while having `Button.js` means that you're never lost in a sea of `index.js` files in your editor.
 >
 > This structure is not currently configurable, but I'm happy to consider implementing alternatives!
 
 
-
+<br />
 ### Configuration
 
 Configuration can be done through 3 different ways:
@@ -74,6 +76,10 @@ Configuration can be done through 3 different ways:
 
 The resulting values are merged, with command-line values overwriting local values, and local values overwriting global ones.
 
+
+
+<br />
+### API Reference
 
 ##### Type
 
