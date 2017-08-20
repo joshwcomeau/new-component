@@ -48,9 +48,10 @@ module.exports.buildPrettifier = prettierConfig => text => (
 
 // Emit a message confirming the creation of the component
 const colors = {
-  gold: [255, 204, 0],
-  blue: [0, 186, 255],
+  red: [216, 16, 16],
   green: [142, 215, 0],
+  blue: [0, 186, 255],
+  gold: [255, 204, 0],
   mediumGray: [128, 128, 128],
   darkGray: [90, 90, 90],
 };
@@ -90,5 +91,12 @@ module.exports.logConclusion = () => {
   console.info('\n');
   console.info(chalk.bold.rgb(...colors.green)('Component created! 🚀 '));
   console.info(chalk.rgb(...colors.mediumGray)('Thanks for using new-component.'));
+  console.info('\n');
+}
+
+module.exports.logError = (error) => {
+  console.info('\n');
+  console.info(chalk.bold.rgb(...colors.red)('Error creating component.'));
+  console.info(chalk.rgb(...colors.red)(error));
   console.info('\n');
 }

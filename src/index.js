@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const fs = require('fs');
+const path = require('path');
 
 const program = require('commander');
 
@@ -9,6 +10,7 @@ const {
   logIntro,
   logItemCompletion,
   logConclusion,
+  logError,
 } = require('./helpers');
 const {
   requireOptional,
@@ -64,6 +66,21 @@ export { default } from './${componentName}';
 `);
 
 logIntro({ name: componentName, dir: componentDir, type: program.type });
+
+
+// Check to see if a directory at the given path exists
+const fullPathToParentDir = path.resolve(program.dir);
+if (!fs.existsSync(fullPathToParentDir)) {
+  logError(`Sorry, you need to create a parent "components" directory.\n(new-component is looking for a directory at ${program.dir}).`)
+  process.exit(0);
+}
+
+// Check to see if this component has already been created
+const fullPathToComponentDir = path.resolve(componentDir);
+if (fs.existsSync(fullPathToComponentDir)) {
+  logError(`Looks like this component already exists! There's already a component at ${componentDir}.\nPlease delete this directory and try again.`)
+  process.exit(0);
+}
 
 // Start by creating the directory that our component lives in.
 mkDirPromise(componentDir)
