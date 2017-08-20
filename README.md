@@ -29,10 +29,6 @@ This project is a globally-installable CLI for adding new React components. It's
 Install via NPM:
 
 ```bash
-# Using Yarn:
-$ yarn global add new-component
-
-# or, using NPM
 $ npm i -g new-component
 ```
 
@@ -144,7 +140,7 @@ JSON config: `{ "prettierConfig": { "key": "value" } }`
 {
   "prettierConfig": {
     "singleQuote": true,
-    "semi": false,
+    "semi": false
   }
 }
 ```
