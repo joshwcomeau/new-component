@@ -15,6 +15,26 @@ const chalk = require('chalk');
 const { requireOptional } = require('./utils');
 
 
+const colors = {
+  red: [216, 16, 16],
+  green: [142, 215, 0],
+  blue: [0, 186, 255],
+  gold: [255, 204, 0],
+  mediumGray: [128, 128, 128],
+  darkGray: [90, 90, 90],
+};
+
+const logComponentType = (selected) => (
+  ['class', 'pure-class', 'functional']
+    .sort((a, b) => a === selected ? -1 : 1)
+    .map(option => (
+      option === selected
+        ? `${chalk.bold.rgb(...colors.blue)(option)}`
+        : `${chalk.rgb(...colors.darkGray)(option)}`
+    )).join('  ')
+);
+
+
 // Get the configuration for this component.
 // Overrides are as follows:
 //  - default values
@@ -38,32 +58,11 @@ module.exports.getConfig = () => {
 
   const localOverrides = requireOptional(`/${currentPath}/.new-component-config.json`);
 
-
-  return Object.assign({}, globalOverrides, localOverrides, defaults);
+  return Object.assign({}, defaults, globalOverrides, localOverrides);
 }
 
 module.exports.buildPrettifier = prettierConfig => text => (
   prettier.format(text, prettierConfig)
-);
-
-// Emit a message confirming the creation of the component
-const colors = {
-  red: [216, 16, 16],
-  green: [142, 215, 0],
-  blue: [0, 186, 255],
-  gold: [255, 204, 0],
-  mediumGray: [128, 128, 128],
-  darkGray: [90, 90, 90],
-};
-
-const logComponentType = (selected) => (
-  ['class', 'pure-class', 'functional']
-    .sort((a, b) => a === selected ? -1 : 1)
-    .map(option => (
-      option === selected
-        ? `${chalk.bold.rgb(...colors.blue)(option)}`
-        : `${chalk.rgb(...colors.darkGray)(option)}`
-    )).join('  ')
 );
 
 module.exports.logIntro = ({ name, dir, type }) => {
