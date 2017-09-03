@@ -68,6 +68,12 @@ export { default } from './${componentName}';
 logIntro({ name: componentName, dir: componentDir, type: program.type });
 
 
+// Check if componentName is provided
+if (!componentName) {
+  logError(`Sorry, you need to specify a name for your component like this: new-component <name>`)
+  process.exit(0);
+}
+
 // Check to see if a directory at the given path exists
 const fullPathToParentDir = path.resolve(program.dir);
 if (!fs.existsSync(fullPathToParentDir)) {
