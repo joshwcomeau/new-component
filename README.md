@@ -151,7 +151,7 @@ JSON config: `{ "prettierConfig": { "key": "value" } }`
 <br />
 
 ## Platform Support
-This has only been tested in MacOS. I think it'd work fine in linux, but I haven't tested it. Windows is a big question mark (would welcome contribution here!).
+This has only been tested in macOS. I think it'd work fine in linux, but I haven't tested it. Windows is a big question mark (would welcome contribution here!).
 
 <br />
 
