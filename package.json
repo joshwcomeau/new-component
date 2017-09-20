@@ -15,11 +15,13 @@
   "author": "Joshua Comeau",
   "license": "MIT",
   "bin": {
-    "new-component": "./src/index.js"
+    "new-component": "./src/index.js",
+    "new-component-undo": "./src/undo.js"
   },
   "dependencies": {
     "chalk": "2.0.1",
     "commander": "2.11.0",
-    "prettier": "1.5.3"
+    "prettier": "1.5.3",
+    "rimraf": "^2.6.2"
   }
 }

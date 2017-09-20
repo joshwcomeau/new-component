@@ -11,6 +11,7 @@ For application-specific concerns, use `helpers.js`.
 */
 const fs = require('fs');
 const path = require('path');
+const rimraf = require('rimraf');
 
 
 module.exports.requireOptional = (filePath) => {
@@ -33,6 +34,33 @@ module.exports.mkDirPromise = (dirPath) => (
     });
   })
 );
+
+module.exports.readDirPromise = dirPath => (
+  new Promise((resolve, reject) => {
+    fs.readdir(dirPath, 'utf-8', (err, files) => {
+      err ? reject(err) : resolve(files);
+    });
+  })
+);
+
+// Simple promise wrapper for rimraf module
+module.exports.rimrafPromise = dirPath => (
+  new Promise((resolve, reject) => {
+    rimraf(dirPath, (err) => {
+      err ? reject(err) : resolve();
+    });
+  })
+);
+
+
+module.exports.statPromise = dirPath => (
+  new Promise((resolve, reject) => {
+    fs.stat(dirPath, (err, file) => {
+      err ? reject(err) : resolve(file);
+    });
+  })
+);
+
 
 // Simple promise wrappers for read/write files.
 // utf-8 is assumed.

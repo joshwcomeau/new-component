@@ -90,6 +90,7 @@ module.exports.logItemCompletion = (successText) => {
 module.exports.logConclusion = () => {
   console.info('\n');
   console.info(chalk.bold.rgb(...colors.green)('Component created! 🚀 '));
+  console.info(chalk.rgb(...colors.blue)(`If this was a mistake, run ${chalk.bold`new-component-undo`}`));
   console.info(chalk.rgb(...colors.mediumGray)('Thanks for using new-component.'));
   console.info('\n');
 }
@@ -99,4 +100,14 @@ module.exports.logError = (error) => {
   console.info(chalk.bold.rgb(...colors.red)('Error creating component.'));
   console.info(chalk.rgb(...colors.red)(error));
   console.info('\n');
+}
+
+module.exports.logUndoConfirmation = (name) => {
+  console.info(`This will delete the component '${chalk.bold(name)}' and all files within the directory.`);
+  console.info(chalk.rgb(...colors.blue)(`Press ${chalk.bold`Enter`} to continue, or ${chalk.bold`any other key to cancel`}.`));
+}
+
+module.exports.logUndoConclusion = (name) => {
+  console.info('\n');
+  console.info(chalk.bold.rgb(...colors.green)(`${chalk.bold(name)} component deleted! 👍 `));
 }
