@@ -12,7 +12,7 @@ const os = require('os');
 const prettier = require('prettier');
 const chalk = require('chalk');
 
-const { requireOptional } = require('./utils');
+const { requireOptional } = require('../utils');
 
 
 // Get the configuration for this component.
@@ -30,6 +30,7 @@ module.exports.getConfig = () => {
 
   const defaults = {
     type: 'class',
+    styling: 'none',
     dir: 'src/components',
     extension: 'js'
   };
@@ -46,6 +47,24 @@ module.exports.buildPrettifier = prettierConfig => text => (
   prettier.format(text, prettierConfig)
 );
 
+const componentTypes = {
+  FUNCTIONAL: 'functional',
+  CLASS: 'class',
+  PURE_CLASS: 'pure-class',
+};
+module.exports.componentTypes = componentTypes;
+
+const stylingTypes = {
+  STYLED: 'styled-components',
+  CSS_MODULES: 'css-modules',
+  APHRODITE: 'aphrodite',
+};
+module.exports.stylingTypes = stylingTypes;
+
+module.exports.hasCssFile = styling => {
+  return styling === module.exports.stylingTypes.CSS_MODULES;
+}
+
 // Emit a message confirming the creation of the component
 const colors = {
   red: [216, 16, 16],
@@ -57,7 +76,7 @@ const colors = {
 };
 
 const logComponentType = (selected) => (
-  ['class', 'pure-class', 'functional']
+  Object.values(componentTypes)
     .sort((a, b) => a === selected ? -1 : 1)
     .map(option => (
       option === selected
@@ -66,17 +85,31 @@ const logComponentType = (selected) => (
     )).join('  ')
 );
 
-module.exports.logIntro = ({ name, dir, type }) => {
+const logStylingType = (selected) => (
+  Object.values(stylingTypes)
+    .sort((a, b) => a === selected ? -1 : 1)
+    .map(option => (
+      option === selected
+        ? `${chalk.bold.rgb(...colors.blue)(option)}`
+        : `${chalk.rgb(...colors.darkGray)(option)}`
+    )).join('  ')
+);
+
+module.exports.logIntro = ({ name, dir, type, styling }) => {
   console.info('\n');
   console.info(`✨  Creating the ${chalk.bold.rgb(...colors.gold)(name)} component ✨`);
   console.info('\n');
 
 
   const pathString = chalk.bold.rgb(...colors.blue)(dir);
-  const typeString = logComponentType(type);
+  const componentTypeString = logComponentType(type);
+  const stylingTypeString = logStylingType(styling);
 
   console.info(`Directory:  ${pathString}`);
-  console.info(`Type:       ${typeString}`);
+  console.info(`Type:       ${componentTypeString}`);
+  if (styling && styling !== 'none') {
+    console.info(`Styling:    ${stylingTypeString}`);
+  }
   console.info(chalk.rgb(...colors.darkGray)('========================================='));
 
   console.info('\n');

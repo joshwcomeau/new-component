@@ -11,6 +11,7 @@ const {
   logItemCompletion,
   logConclusion,
   logError,
+  hasCssFile,
 } = require('./helpers');
 const {
   requireOptional,
@@ -18,7 +19,8 @@ const {
   readFilePromiseRelative,
   writeFilePromise,
 } = require('./utils');
-
+const generateTemplate = require('./helpers/templateConstructor');
+const cssTemplate = require('./templates/css');
 
 // Load our package.json, so that we can pass the version onto `commander`.
 const { version } = require('../package.json');
@@ -30,6 +32,9 @@ const config = getConfig();
 // Convenience wrapper around Prettier, so that config doesn't have to be
 // passed every time.
 const prettify = buildPrettifier(config.prettierConfig);
+const prettifyCss = buildPrettifier(Object.assign({}, config.prettierConfig, {
+  parser: 'postcss'
+}));
 
 
 program
@@ -40,6 +45,11 @@ program
     'Type of React component to generate (default: "class")',
     /^(class|pure-class|functional)$/i,
     config.type
+  ).option(
+    '-s, --styling <stylingSolution>',
+    'Which styling solution to generate for (default: "none")',
+    /^(none|styled-components|css-modules|aphrodite)$/i,
+    config.styling
   ).option(
     '-d, --dir <pathToDirectory>',
     'Path to the "components" directory (default: "src/components")',
@@ -52,20 +62,23 @@ program
 
 const [componentName] = program.args;
 
-// Find the path to the selected template file.
-const templatePath = `./templates/${program.type}.js`;
-
 // Get all of our file paths worked out, for the user's project.
 const componentDir = `${program.dir}/${componentName}`;
-const filePath = `${componentDir}/${componentName}.${program.extension}`;
+const componentFilePath = `${componentDir}/${componentName}.${program.extension}`;
+const cssFilePath = `${componentDir}/${componentName}.${'css'}`;
 const indexPath = `${componentDir}/index.js`;
 
 // Our index template is super straightforward, so we'll just inline it for now.
-const indexTemplate = prettify(`\
+const indexTemplate = `\
 export { default } from './${componentName}';
-`);
+`;
 
-logIntro({ name: componentName, dir: componentDir, type: program.type });
+logIntro({
+  name: componentName,
+  dir: componentDir,
+  type: program.type,
+  styling: program.styling,
+});
 
 
 // Check if componentName is provided
@@ -91,33 +104,37 @@ if (fs.existsSync(fullPathToComponentDir)) {
 // Start by creating the directory that our component lives in.
 mkDirPromise(componentDir)
   .then(() => (
-    readFilePromiseRelative(templatePath)
+    generateTemplate(componentName, program.type, program.styling)
   ))
   .then(template => {
     logItemCompletion('Directory created.');
     return template;
   })
   .then(template => (
-    // Replace our placeholders with real data (so far, just the component name)
-    template.replace(/COMPONENT_NAME/g, componentName)
-  ))
-  .then(template => (
     // Format it using prettier, to ensure style consistency, and write to file.
-    writeFilePromise(filePath, prettify(template))
+    writeFilePromise(componentFilePath, prettify(template))
   ))
-  .then(template => {
-    logItemCompletion('Component built and saved to disk.');
-    return template;
+  .then(() => {
+    // Check whether we should make a CSS file too
+    if (hasCssFile(program.styling)) {
+      // Format it using prettier, to ensure style consistency, and write to file.
+      return writeFilePromise(cssFilePath, prettifyCss(cssTemplate))
+        .then(() => {
+          logItemCompletion('CSS file built and saved to disk.');
+        });
+    }
   })
-  .then(template => (
+  .then(() => {
+    logItemCompletion('Component built and saved to disk.');
+  })
+  .then(() => (
     // We also need the `index.js` file, which allows easy importing.
     writeFilePromise(indexPath, prettify(indexTemplate))
   ))
-  .then(template => {
+  .then(() => {
     logItemCompletion('Index file built and saved to disk.');
-    return template;
   })
-  .then(template => {
+  .then(() => {
     logConclusion();
   })
   .catch(err => {
