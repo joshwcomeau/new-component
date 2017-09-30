@@ -4,7 +4,21 @@
   "description": "CLI for creating new React components",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pretty": "prettier --single-quote --trailing-comma es5 --write 'src/**/*.js'",
+    "precommit": "npm run pretty"
+  },
+  "bin": {
+    "new-component": "./src/index.js"
+  },
+  "dependencies": {
+    "chalk": "2.0.1",
+    "commander": "2.11.0",
+    "prettier": "1.7.3"
+  },
+  "devDependencies": {
+    "husky": "0.14.3",
+    "lint-staged": "4.2.3"
   },
   "keywords": [
     "react",
@@ -14,12 +28,10 @@
   ],
   "author": "Joshua Comeau",
   "license": "MIT",
-  "bin": {
-    "new-component": "./src/index.js"
-  },
-  "dependencies": {
-    "chalk": "2.0.1",
-    "commander": "2.11.0",
-    "prettier": "1.5.3"
+  "lint-staged": {
+    "*.js": [
+        "npm run pretty",
+        "git add"
+    ]
   }
 }
