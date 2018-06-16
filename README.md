@@ -162,3 +162,11 @@ This is a brand new thing! I'd like to add more functionality:
 - Built-in support for common style tools (CSS modules, Aphrodite, styled-components, etc).
 - Better error messaging, more edge-case support
 - Editor integrations :o
+
+## Development
+
+To get started with development:
+* Check out this git repo locally, you will need to ensure you have Yarn installed globally.
+* In the folder run `yarn install`
+* Check that command runs `node ../new-component/src/index.js --help`
+* Alternatively you can set up a symlink override by running `npm link` then `new-component --help`. Note: this will override any globally installed version of this package.
