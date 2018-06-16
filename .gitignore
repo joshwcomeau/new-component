@@ -1,3 +1,5 @@
 .DS_Store
 node_modules
 yarn-error.log
+# src/components folder used for testing only
+src/components
