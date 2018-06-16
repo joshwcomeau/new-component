@@ -10,7 +10,8 @@
     "react",
     "reactjs",
     "cli",
-    "component"
+    "component",
+    "boilerplate"
   ],
   "author": "Joshua Comeau",
   "license": "MIT",
