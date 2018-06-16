@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test should accept --help argument 1`] = `
+"
+  Usage: index [options] <componentName>
+
+  Options:
+
+    -V, --version                    output the version number
+    -t, --type <componentType>       Type of React component to generate (default: \\"class\\") (default: class)
+    -d, --dir <pathToDirectory>      Path to the \\"components\\" directory (default: \\"src/components\\") (default: src/components)
+    -x, --extension <fileExtension>  Which file extension to use for the component (default: \\"js\\") (default: js)
+    -h, --help                       output usage information
+"
+`;

@@ -7,7 +7,9 @@ describe('test', () => {
     child = spawnCommand(CLI_PATH + ' --help');
 
     child.stdout.on('data', function (data) {
-      expect(data.toString()).toContain('-t, --type <componentType>');
+      const output = data.toString();
+      expect(output).toMatchSnapshot();
+      expect(output).toContain('-t, --type <componentType>');
     });
 
     child.on('exit', function (exitCode) {
