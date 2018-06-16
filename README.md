@@ -170,3 +170,4 @@ To get started with development:
 * In the folder run `yarn install`
 * Check that command runs `node ../new-component/src/index.js --help`
 * Alternatively you can set up a symlink override by running `npm link` then `new-component --help`. Note: this will override any globally installed version of this package.
+* Run tests `yarn test`
