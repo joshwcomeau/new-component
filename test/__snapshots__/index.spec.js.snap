@@ -1,6 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`new-component CLI should accept --help argument 1`] = `
+exports[`new-component - creating a new component should create a new component file for CoolButton 1`] = `
+"
+
+✨  Creating the CoolButton component ✨
+
+
+Directory:  src/components/CoolButton
+Type:       class  functional  pure-class
+=========================================
+
+
+✓ Directory created.
+✓ Component built and saved to disk.
+✓ Index file built and saved to disk.
+
+
+Component created! 🚀 
+Thanks for using new-component.
+
+"
+`;
+
+exports[`new-component - creating a new component should show console error if no components folder 1`] = `
+"
+
+✨  Creating the CoolButton component ✨
+
+
+Directory:  src/components/CoolButton
+Type:       class  functional  pure-class
+=========================================
+
+
+
+
+Error creating component.
+Sorry, you need to create a parent \\"components\\" directory.
+(new-component is looking for a directory at src/components).
+
+"
+`;
+
+exports[`new-component - help should accept --help argument ASYNC 1`] = `
 "
   Usage: index [options] <componentName>
 
@@ -10,6 +52,18 @@ exports[`new-component CLI should accept --help argument 1`] = `
     -t, --type <componentType>       Type of React component to generate (default: \\"class\\") (default: class)
     -d, --dir <pathToDirectory>      Path to the \\"components\\" directory (default: \\"src/components\\") (default: src/components)
     -x, --extension <fileExtension>  Which file extension to use for the component (default: \\"js\\") (default: js)
-    -h, --help                       output usage information
+    -h, --help                       output usage information"
+`;
+
+exports[`new-component - help should accept --help argument SYNC 1`] = `
 "
+  Usage: index [options] <componentName>
+
+  Options:
+
+    -V, --version                    output the version number
+    -t, --type <componentType>       Type of React component to generate (default: \\"class\\") (default: class)
+    -d, --dir <pathToDirectory>      Path to the \\"components\\" directory (default: \\"src/components\\") (default: src/components)
+    -x, --extension <fileExtension>  Which file extension to use for the component (default: \\"js\\") (default: js)
+    -h, --help                       output usage information"
 `;
