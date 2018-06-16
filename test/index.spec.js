@@ -2,7 +2,7 @@ var spawnCommand = require('spawn-command');
 
 const CLI_PATH = require.resolve('../src/index');
 
-describe('test', () => {
+describe('new-component CLI', () => {
   it('should accept --help argument', done => {
     child = spawnCommand(CLI_PATH + ' --help');
 

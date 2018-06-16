@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`test should accept --help argument 1`] = `
+exports[`new-component CLI should accept --help argument 1`] = `
 "
   Usage: index [options] <componentName>
 
