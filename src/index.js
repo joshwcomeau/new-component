@@ -11,12 +11,14 @@ const {
   logItemCompletion,
   logConclusion,
   logError,
+  logWarn,
 } = require('./helpers');
 const {
   requireOptional,
   mkDirPromise,
   readFilePromiseRelative,
   writeFilePromise,
+  appendFilePromise,
 } = require('./utils');
 
 
@@ -65,19 +67,25 @@ const indexTemplate = prettify(`\
 export { default } from './${componentName}';
 `);
 
+const parentIndexTemplate = prettify(`\
+export ${componentName} from './${componentName}';
+`);
+
 logIntro({ name: componentName, dir: componentDir, type: program.type });
 
-
-// Check if componentName is provided
-if (!componentName) {
-  logError(`Sorry, you need to specify a name for your component like this: new-component <name>`)
-  process.exit(0);
-}
 
 // Check to see if a directory at the given path exists
 const fullPathToParentDir = path.resolve(program.dir);
 if (!fs.existsSync(fullPathToParentDir)) {
   logError(`Sorry, you need to create a parent "components" directory.\n(new-component is looking for a directory at ${program.dir}).`)
+  process.exit(0);
+}
+
+// Check to see if the parent directory has an index file
+const parentIndexPath = `${fullPathToParentDir}/index.js`;
+const hasParentIndex = fs.existsSync(path.resolve(parentIndexPath));
+if (!hasParentIndex) {
+  logWarn(`Looks like this component's parent directory does not have an index file.\nYou might want to add one.`)
   process.exit(0);
 }
 
@@ -115,6 +123,14 @@ mkDirPromise(componentDir)
   ))
   .then(template => {
     logItemCompletion('Index file built and saved to disk.');
+    return template;
+  })
+  .then(template => (
+    // We also need the `index.js` file, which allows easy importing.
+    hasParentIndex && appendFilePromise(parentIndexPath, prettify(parentIndexTemplate))
+  ))
+  .then(template => {
+    hasParentIndex && logItemCompletion('Added export to parent index file');
     return template;
   })
   .then(template => {

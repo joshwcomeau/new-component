@@ -52,6 +52,14 @@ module.exports.writeFilePromise = (fileLocation, fileContent) => (
   })
 );
 
+module.exports.appendFilePromise = (fileLocation, fileContent) => (
+  new Promise((resolve, reject) => {
+    fs.appendFile(fileLocation, fileContent, 'utf-8', (err) => {
+      err ? reject(err) : resolve();
+    });
+  })
+);
+
 // Somewhat counter-intuitively, `fs.readFile` works relative to the current
 // working directory (if the user is in their own project, it's relative to
 // their project). This is unlike `require()` calls, which are always relative
