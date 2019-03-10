@@ -1,7 +1,15 @@
 {
   "name": "new-component",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "CLI for creating new React components",
+  "homepage": "https://github.com/joshwcomeau/new-component",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshwcomeau/new-component"
+  },
+  "bugs": {
+    "url": "https://github.com/joshwcomeau/new-component/issues"
+  },
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +18,8 @@
     "react",
     "reactjs",
     "cli",
-    "component"
+    "component",
+    "boilerplate"
   ],
   "author": "Joshua Comeau",
   "license": "MIT",
@@ -18,8 +27,8 @@
     "new-component": "./src/index.js"
   },
   "dependencies": {
-    "chalk": "2.0.1",
-    "commander": "2.11.0",
+    "chalk": "^2.4.1",
+    "commander": "^2.15.1",
     "prettier": "1.5.3"
   }
 }
