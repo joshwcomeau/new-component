@@ -94,6 +94,12 @@ module.exports.logConclusion = () => {
   console.info('\n');
 }
 
+module.exports.logWarn = (warningMsg) => {
+  console.info('\n');
+  console.info(chalk.rgb(...colors.mediumGray)(warningMsg));
+  console.info('\n');
+}
+
 module.exports.logError = (error) => {
   console.info('\n');
   console.info(chalk.bold.rgb(...colors.red)('Error creating component.'));
