@@ -5,6 +5,7 @@
 </p>
 
 # `new-component`
+
 ### Simple, customizable utility for adding new React components to your project.
 
 <img src="https://github.com/joshwcomeau/new-component/blob/master/docs/divider@2x.png?raw=true" width="888" height="100" role="presentation">
@@ -16,11 +17,11 @@ This project is a globally-installable CLI for adding new React components. It's
 <br />
 
 ## Features
+
 - Simple CLI interface for adding Component, PureComponent, or Stateless Functional components.
 - Uses [Prettier](https://github.com/prettier/prettier) to stylistically match the existing project.
 - Offers global config, which can be overridden on a project-by-project basis.
 - Colourful terminal output!
-
 
 <br />
 
@@ -66,7 +67,6 @@ export default Button;
 >
 > This structure is not currently configurable, but I'm happy to consider implementing alternatives!
 
-
 <br />
 
 ## Configuration
@@ -79,8 +79,6 @@ Configuration can be done through 3 different ways:
 
 The resulting values are merged, with command-line values overwriting local values, and local values overwriting global ones.
 
-
-
 <br />
 
 ## API Reference
@@ -88,11 +86,12 @@ The resulting values are merged, with command-line values overwriting local valu
 ### Type
 
 Control the type of component created:
-- `class` for a traditional Component class (default),
-- `pure-class` for a PureComponent class,
-- `functional` for a stateless functional component.
 
-Legacy `createClass` components are not supported, although support would be easy to add. Feel free to open an issue (or a PR!).
+- `functional` for a stateless functional component (default).
+- `class` for a traditional Component class,
+- `pure-class` for a PureComponent class,
+
+Legacy `createClass` components are not supported.
 
 **Usage:**
 
@@ -104,8 +103,6 @@ JSON config: `{ "type": <value> }`
 ### Directory
 
 Controls the desired directory for the created component. Defaults to `src/components`
-
-Legacy `createClass` components are not supported, although support would be easy to add. Feel free to open an issue (or a PR!).
 
 **Usage:**
 
@@ -148,25 +145,22 @@ JSON config: `{ "prettierConfig": { "key": "value" } }`
   }
 }
 ```
+
+(Ideally, the plugin would consume your project's prettier settings automatically! But I haven't built this yet. PRs welcome!)
+
 <br />
 
 ## Platform Support
+
 This has only been tested in macOS. I think it'd work fine in linux, but I haven't tested it. Windows is a big question mark (would welcome contribution here!).
 
 <br />
 
-## TODO
-
-This is a brand new thing! I'd like to add more functionality:
-
-- Built-in support for common style tools (CSS modules, Aphrodite, styled-components, etc).
-- Better error messaging, more edge-case support
-- Editor integrations :o
-
 ## Development
 
 To get started with development:
-* Check out this git repo locally, you will need to ensure you have Yarn installed globally.
-* In the folder run `yarn install`
-* Check that command runs `node ../new-component/src/index.js --help`
-* Alternatively you can set up a symlink override by running `npm link` then `new-component --help`. Note: this will override any globally installed version of this package.
+
+- Check out this git repo locally, you will need to ensure you have Yarn installed globally.
+- In the folder run `yarn install`
+- Check that command runs `node ../new-component/src/index.js --help`
+- Alternatively you can set up a symlink override by running `npm link` then `new-component --help`. Note: this will override any globally installed version of this package.
