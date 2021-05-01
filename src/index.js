@@ -59,7 +59,7 @@ const templatePath = `./templates/${program.type}.js`;
 // Get all of our file paths worked out, for the user's project.
 const componentDir = `${program.dir}/${componentName}`;
 const filePath = `${componentDir}/${componentName}.${program.extension}`;
-const indexPath = `${componentDir}/index.js`;
+const indexPath = `${componentDir}/index.${program.extension}`;
 
 // Our index template is super straightforward, so we'll just inline it for now.
 const indexTemplate = prettify(`\
