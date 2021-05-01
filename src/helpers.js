@@ -9,6 +9,7 @@ use `utils.js` instead.
 */
 const os = require('os');
 
+const path = require('path')
 const prettier = require('prettier');
 const chalk = require('chalk');
 
@@ -34,14 +35,14 @@ module.exports.getConfig = () => {
   };
 
   const globalOverrides = requireOptional(
-    `/${home}/.new-component-config.json`
+    path.resolve(home, ".new-component-config.json")
   );
 
   const localOverrides = requireOptional(
-    `/${currentPath}/.new-component-config.json`
+    path.resolve(currentPath, ".new-component-config.json")
   );
 
-  return Object.assign({}, globalOverrides, localOverrides, defaults);
+  return Object.assign({}, defaults, globalOverrides, localOverrides);
 };
 
 module.exports.buildPrettifier = (prettierConfig) => (text) =>
