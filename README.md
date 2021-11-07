@@ -8,6 +8,8 @@ The rest of README is just the original text with some tweaks needed to explain 
 
 Enjoy!
 
+---
+
 <p align="center">
   <img src="https://github.com/joshwcomeau/new-component/blob/master/docs/logo@2x.png?raw=true" width="285" height="285" alt="new-component logo">
   <br>
