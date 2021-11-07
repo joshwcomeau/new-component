@@ -1,21 +1,10 @@
-# Fork of [Joshua Comeau's `new-component` CLI utility](https://github.com/joshwcomeau/new-component)...
-
-...with TypeScript support and fixed config.
-
-I wanted to contribute to the original project but unfortunately, [it is a little bit dead](https://github.com/joshwcomeau/new-component/pulls), so I hope this repo with features that were essential for me, will help some of you with making React components with more ease 😌
-
-The rest of README is just the original text with some tweaks needed to explain features added by me.
-
-Enjoy!
-
----
-
 <p align="center">
   <img src="https://github.com/joshwcomeau/new-component/blob/master/docs/logo@2x.png?raw=true" width="285" height="285" alt="new-component logo">
   <br>
   <a href="https://www.npmjs.org/package/new-component"><img src="https://img.shields.io/npm/v/new-component.svg?style=flat" alt="npm"></a>
 </p>
 
+# `new-component`
 ### Simple, customizable utility for adding new React components to your project.
 
 <img src="https://github.com/joshwcomeau/new-component/blob/master/docs/divider@2x.png?raw=true" width="888" height="100" role="presentation">
