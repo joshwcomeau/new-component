@@ -45,33 +45,53 @@ program
     config.dir
   )
   .option(
+    '-l, --language <filesLanguage>',
+    'Which files language to use for all component\'s files (default: "js")',
+    config.language
+  )
+  .option(
     '-x, --extension <fileExtension>',
-    'Which file extension to use for the component (default: "js")',
+    'Which file extension to use for the component (skipped in TypeScript components - for TS it is always "tsx")',
     config.extension
   )
   .parse(process.argv);
 
 const [componentName] = program.args;
 
+// Always set the component's extension to ".tsx" if desired language is TypeScript.
+const componentFileExtension = 
+  program.language === 'ts' ? 'tsx' : program.extension;
+
+// Set proper template file extension, based on language.
+const templateFileExtension = program.language === 'ts' ? 'tsx' : 'js';
+
 // Find the path to the selected template file.
-const templatePath = `./templates/${program.type}.js`;
+const templatePath = `./templates/${program.language}/${program.type}.${templateFileExtension}`;
 
 // Get all of our file paths worked out, for the user's project.
 const componentDir = `${program.dir}/${componentName}`;
-const filePath = `${componentDir}/${componentName}.${program.extension}`;
-const indexPath = `${componentDir}/index.js`;
+const filePath = `${componentDir}/${componentName}.${componentFileExtension}`;
+const indexPath = `${componentDir}/index.${program.language}`;
 
 // Our index template is super straightforward, so we'll just inline it for now.
 const indexTemplate = prettify(`\
 export { default } from './${componentName}';
 `);
 
-logIntro({ name: componentName, dir: componentDir, type: program.type });
+logIntro({ name: componentName, dir: componentDir, type: program.type, language: program.language });
 
 // Check if componentName is provided
 if (!componentName) {
   logError(
     `Sorry, you need to specify a name for your component like this: new-component <name>`
+  );
+  process.exit(0);
+}
+
+// Check if component's language is either JS or TS 
+if (program.language !== 'ts' && program.language !== 'js') {
+  logError(
+    `Sorry, you need to provide correct language shorthand ("js" or "ts")`
   );
   process.exit(0);
 }

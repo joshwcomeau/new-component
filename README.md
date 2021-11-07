@@ -18,7 +18,7 @@ This project is a globally-installable CLI for adding new React components. It's
 
 ## Features
 
-- Simple CLI interface for adding Component, PureComponent, or Stateless Functional components.
+- Simple CLI interface for adding Component, PureComponent, or Stateless Functional components written in JavaScript or TypeScript.
 - Uses [Prettier](https://github.com/prettier/prettier) to stylistically match the existing project.
 - Offers global config, which can be overridden on a project-by-project basis.
 - Colourful terminal output!
@@ -111,9 +111,22 @@ Command line: `--dir <value>` or `-d <value>`
 JSON config: `{ "dir": <value> }`
 <br />
 
+### Language
+
+Controls the language for the created components. Can be either `js` (default) or `ts`.
+
+**Usage:**
+
+Command line: `--language <value>` or `-l <value>`
+
+JSON config: `{ "language": <value> }`
+<br />
+
 ### File Extension
 
-Controls the file extension for the created components. Can be either `js` (default) or `jsx`.
+Controls the file extension for the created components. Can be either `js` (default) or `jsx`. 
+
+> As you see, `tsx` is not predicted - everything because if you choose TypeScript as the [language](#language), file extension always remain `tsx` and you don't have to tweak this option in any way. 
 
 **Usage:**
 
