@@ -88,6 +88,14 @@ if (!componentName) {
   process.exit(0);
 }
 
+// Check if component's language is either JS or TS 
+if (program.language !== 'ts' && program.language !== 'js') {
+  logError(
+    `Sorry, you need to provide correct language shorthand ("js" or "ts")`
+  );
+  process.exit(0);
+}
+
 // Check to see if a directory at the given path exists
 const fullPathToParentDir = path.resolve(program.dir);
 if (!fs.existsSync(fullPathToParentDir)) {
