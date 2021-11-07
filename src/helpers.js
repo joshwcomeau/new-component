@@ -30,8 +30,9 @@ module.exports.getConfig = () => {
   const defaults = {
     type: 'functional',
     dir: 'src/components',
-    extension: 'js',
+    language: 'js',
   };
+  defaults.extension = defaults.language === 'ts' ? 'tsx' : 'js';
 
   const globalOverrides = requireOptional(
     `/${home}/.new-component-config.json`

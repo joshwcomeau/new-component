@@ -45,8 +45,13 @@ program
     config.dir
   )
   .option(
+    '-l, --language <filesLanguage>',
+    'Which files language to use for all component\'s files (default: "js")',
+    config.language
+  )
+  .option(
     '-x, --extension <fileExtension>',
-    'Which file extension to use for the component (default: "js")',
+    'Which file extension to use for the component (default: "js" for --language=js and "tsx" for --language=ts)',
     config.extension
   )
   .parse(process.argv);
@@ -54,19 +59,19 @@ program
 const [componentName] = program.args;
 
 // Find the path to the selected template file.
-const templatePath = `./templates/${program.type}.js`;
+const templatePath = `./templates/${program.language}/${program.type}.js`;
 
 // Get all of our file paths worked out, for the user's project.
 const componentDir = `${program.dir}/${componentName}`;
 const filePath = `${componentDir}/${componentName}.${program.extension}`;
-const indexPath = `${componentDir}/index.js`;
+const indexPath = `${componentDir}/index.${program.language}`;
 
 // Our index template is super straightforward, so we'll just inline it for now.
 const indexTemplate = prettify(`\
 export { default } from './${componentName}';
 `);
 
-logIntro({ name: componentName, dir: componentDir, type: program.type });
+logIntro({ name: componentName, dir: componentDir, type: program.type, language: program.language });
 
 // Check if componentName is provided
 if (!componentName) {
