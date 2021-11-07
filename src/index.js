@@ -51,19 +51,26 @@ program
   )
   .option(
     '-x, --extension <fileExtension>',
-    'Which file extension to use for the component (default: "js" for --language=js and "tsx" for --language=ts)',
+    'Which file extension to use for the component (skipped in TypeScript components - for TS it is always "tsx")',
     config.extension
   )
   .parse(process.argv);
 
 const [componentName] = program.args;
 
+// Always set the component's extension to ".tsx" if desired language is TypeScript.
+const componentFileExtension = 
+  program.language === 'ts' ? 'tsx' : program.extension;
+
+// Set proper template file extension, based on language.
+const templateFileExtension = program.language === 'ts' ? 'tsx' : 'js';
+
 // Find the path to the selected template file.
-const templatePath = `./templates/${program.language}/${program.type}.${program.extension}`;
+const templatePath = `./templates/${program.language}/${program.type}.${templateFileExtension}`;
 
 // Get all of our file paths worked out, for the user's project.
 const componentDir = `${program.dir}/${componentName}`;
-const filePath = `${componentDir}/${componentName}.${program.extension}`;
+const filePath = `${componentDir}/${componentName}.${componentFileExtension}`;
 const indexPath = `${componentDir}/index.${program.language}`;
 
 // Our index template is super straightforward, so we'll just inline it for now.
