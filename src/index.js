@@ -59,7 +59,7 @@ program
 const [componentName] = program.args;
 
 // Find the path to the selected template file.
-const templatePath = `./templates/${program.language}/${program.type}.js`;
+const templatePath = `./templates/${program.language}/${program.type}.${program.extension}`;
 
 // Get all of our file paths worked out, for the user's project.
 const componentDir = `${program.dir}/${componentName}`;
