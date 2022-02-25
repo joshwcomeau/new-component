@@ -4,6 +4,8 @@ const path = require('path');
 
 const program = require('commander');
 
+console.log('LINK CHECK')
+
 const {
   getConfig,
   buildPrettifier,
