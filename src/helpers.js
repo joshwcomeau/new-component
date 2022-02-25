@@ -44,8 +44,21 @@ module.exports.getConfig = () => {
   return Object.assign({}, globalOverrides, localOverrides, defaults);
 };
 
-module.exports.buildPrettifier = (prettierConfig) => (text) =>
-  prettier.format(text, prettierConfig);
+module.exports.buildPrettifier = (prettierConfig) => {
+  // If they haven't supplied a prettier config, check for a
+  // `.prettierrc`!
+
+  let config = prettierConfig;
+
+  if (!config) {
+    const currentPath = process.cwd();
+    const config = requireOptional(
+      `/${currentPath}/.prettierrc`
+      );
+    }
+
+  return (text) => prettier.format(text, config);
+}
 
 // Emit a message confirming the creation of the component
 const colors = {

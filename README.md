@@ -18,7 +18,7 @@ This project is a globally-installable CLI for adding new React components. It's
 
 ## Features
 
-- Simple CLI interface for adding Component, PureComponent, or Stateless Functional components.
+- Simple CLI interface for adding React components.
 - Uses [Prettier](https://github.com/prettier/prettier) to stylistically match the existing project.
 - Offers global config, which can be overridden on a project-by-project basis.
 - Colourful terminal output!
