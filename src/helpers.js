@@ -54,10 +54,15 @@ module.exports.buildPrettifier = (prettierConfig) => {
 
   if (!config) {
     const currentPath = process.cwd();
-    config = fs.readFileSync(
-      path.join(currentPath, '/.prettierrc'),
-      { encoding: 'utf8', flag: 'r' }
-    )
+
+    try {
+      config = fs.readFileSync(
+        path.join(currentPath, '/.prettierrc'),
+        { encoding: 'utf8', flag: 'r' }
+      );
+    } catch (err) {
+      // No big deal, they don't have a prettier config
+    }
 
     if (config) {
       try {
