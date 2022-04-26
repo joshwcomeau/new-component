@@ -1,7 +1,6 @@
 import React from 'react';
 
-
-const COMPONENT_NAME = () => {
+function COMPONENT_NAME() {
   return <div />;
 };
 
