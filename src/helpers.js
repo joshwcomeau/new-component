@@ -43,7 +43,7 @@ module.exports.getConfig = () => {
     `/${currentPath}/.new-component-config.json`
   );
 
-  return Object.assign({}, globalOverrides, localOverrides, defaults);
+  return Object.assign({}, defaults, globalOverrides, localOverrides);
 };
 
 module.exports.buildPrettifier = (prettierConfig) => {
