@@ -8,6 +8,8 @@ NOTE: For generalized concerns that aren't specific to this project,
 use `utils.js` instead.
 */
 const os = require('os');
+const fs = require('fs');
+const path = require('path');
 
 const prettier = require('prettier');
 const chalk = require('chalk');
@@ -44,8 +46,37 @@ module.exports.getConfig = () => {
   return Object.assign({}, defaults, globalOverrides, localOverrides);
 };
 
-module.exports.buildPrettifier = (prettierConfig) => (text) =>
-  prettier.format(text, prettierConfig);
+module.exports.buildPrettifier = (prettierConfig) => {
+  // If they haven't supplied a prettier config, check for a
+  // `.prettierrc`!
+
+  let config = prettierConfig;
+
+  if (!config) {
+    const currentPath = process.cwd();
+
+    try {
+      config = fs.readFileSync(
+        path.join(currentPath, '/.prettierrc'),
+        { encoding: 'utf8', flag: 'r' }
+      );
+    } catch (err) {
+      // No big deal, they don't have a prettier config
+    }
+
+    if (config) {
+      try {
+        config = JSON.parse(config);
+      } catch (err) {
+        console.error('Count not parse .prettierrc, does not appear to be JSON')
+      }
+    }
+  }
+
+  return (text) => {
+    return prettier.format(text, config);
+  }
+}
 
 // Emit a message confirming the creation of the component
 const colors = {
