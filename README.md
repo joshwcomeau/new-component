@@ -113,7 +113,7 @@ JSON config: `{ "dir": <value> }`
 
 ### File Extension
 
-Controls the file extension for the created components. Can be either `js` (default) or `jsx`.
+Controls the file extension for the created components. Options are `js` (default), `jsx`, `ts` or `tsx`. Any provided extensione will work though.
 
 **Usage:**
 
