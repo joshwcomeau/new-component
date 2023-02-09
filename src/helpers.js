@@ -14,7 +14,8 @@ const path = require('path');
 const prettier = require('prettier');
 const chalk = require('chalk');
 
-const { requireOptional } = require('./utils');
+const { requireOptional, sample } = require('./utils');
+const AFFIRMATIONS = require('./affirmations');
 
 // Get the configuration for this component.
 // Overrides are as follows:
@@ -30,9 +31,8 @@ module.exports.getConfig = () => {
   const currentPath = process.cwd();
 
   const defaults = {
-    type: 'functional',
+    lang: 'js',
     dir: 'src/components',
-    extension: 'js',
   };
 
   const globalOverrides = requireOptional(
@@ -46,37 +46,31 @@ module.exports.getConfig = () => {
   return Object.assign({}, defaults, globalOverrides, localOverrides);
 };
 
-module.exports.buildPrettifier = (prettierConfig) => {
-  // If they haven't supplied a prettier config, check for a
-  // `.prettierrc`!
+module.exports.buildPrettifier = () => {
+  let config = prettier.resolveConfig.sync(process.cwd());
 
-  let config = prettierConfig;
+  // default config:
+  config = config || {
+    semi: true,
+    singleQuote: true,
+    trailingComma: 'es5',
+  };
 
-  if (!config) {
-    const currentPath = process.cwd();
+  // Prettier warns if we don't specify a parser or a file path.
+  // TODO: Maybe we should create the file first, so that it can
+  // serve as the file path?
+  config.parser = config.parser || 'babel';
 
-    try {
-      config = fs.readFileSync(
-        path.join(currentPath, '/.prettierrc'),
-        { encoding: 'utf8', flag: 'r' }
-      );
-    } catch (err) {
-      // No big deal, they don't have a prettier config
-    }
+  return (text) => prettier.format(text, config);
+};
 
-    if (config) {
-      try {
-        config = JSON.parse(config);
-      } catch (err) {
-        console.error('Count not parse .prettierrc, does not appear to be JSON')
-      }
-    }
+module.exports.createParentDirectoryIfNecessary = async (dir) => {
+  const fullPathToParentDir = path.resolve(dir);
+
+  if (!fs.existsSync(fullPathToParentDir)) {
+    fs.mkdirSync(dir);
   }
-
-  return (text) => {
-    return prettier.format(text, config);
-  }
-}
+};
 
 // Emit a message confirming the creation of the component
 const colors = {
@@ -88,30 +82,38 @@ const colors = {
   darkGray: [90, 90, 90],
 };
 
-const logComponentType = (selected) =>
-  ['class', 'pure-class', 'functional']
-    .sort((a, b) => (a === selected ? -1 : 1))
+const langNames = {
+  js: 'JavaScript',
+  ts: 'TypeScript',
+};
+
+const logComponentLang = (selected) =>
+  ['js', 'ts']
     .map((option) =>
       option === selected
-        ? `${chalk.bold.rgb(...colors.blue)(option)}`
-        : `${chalk.rgb(...colors.darkGray)(option)}`
+        ? `${chalk.bold.rgb(...colors.blue)(langNames[option])}`
+        : `${chalk.rgb(...colors.darkGray)(langNames[option])}`
     )
     .join('  ');
 
-module.exports.logIntro = ({ name, dir, type }) => {
+module.exports.logIntro = ({ name, dir, lang }) => {
   console.info('\n');
   console.info(
-    `✨  Creating the ${chalk.bold.rgb(...colors.gold)(name)} component ✨`
+    `✨  Creating the ${chalk.bold.rgb(...colors.gold)(
+      name
+    )} component ✨`
   );
   console.info('\n');
 
   const pathString = chalk.bold.rgb(...colors.blue)(dir);
-  const typeString = logComponentType(type);
+  const langString = logComponentLang(lang);
 
   console.info(`Directory:  ${pathString}`);
-  console.info(`Type:       ${typeString}`);
+  console.info(`Language:   ${langString}`);
   console.info(
-    chalk.rgb(...colors.darkGray)('=========================================')
+    chalk.rgb(...colors.darkGray)(
+      '========================================='
+    )
   );
 
   console.info('\n');
@@ -124,16 +126,16 @@ module.exports.logItemCompletion = (successText) => {
 
 module.exports.logConclusion = () => {
   console.info('\n');
-  console.info(chalk.bold.rgb(...colors.green)('Component created! 🚀 '));
-  console.info(
-    chalk.rgb(...colors.mediumGray)('Thanks for using new-component.')
-  );
+  console.info(chalk.bold.rgb(...colors.green)('Component created!'));
+  console.info(chalk.rgb(...colors.mediumGray)(sample(AFFIRMATIONS)));
   console.info('\n');
 };
 
 module.exports.logError = (error) => {
   console.info('\n');
-  console.info(chalk.bold.rgb(...colors.red)('Error creating component.'));
+  console.info(
+    chalk.bold.rgb(...colors.red)('Error creating component.')
+  );
   console.info(chalk.rgb(...colors.red)(error));
   console.info('\n');
 };

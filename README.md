@@ -4,15 +4,17 @@
   <a href="https://www.npmjs.org/package/new-component"><img src="https://img.shields.io/npm/v/new-component.svg?style=flat" alt="npm"></a>
 </p>
 
-# `new-component`
+# new-component
 
 ### Simple, customizable utility for adding new React components to your project.
 
 <img src="https://github.com/joshwcomeau/new-component/blob/master/docs/divider@2x.png?raw=true" width="888" height="100" role="presentation">
 
-Anyone else sick of writing the same component boilerplate, over and over?
+This project is a CLI tool that allows you to quickly scaffold new components. All of the necessary boilerplate will be generated automatically.
 
-This project is a globally-installable CLI for adding new React components. It's dead simple to use, and requires no configuration, although it's easy to customize it to fit your project's coding style.
+This project uses an opinionated file structure discussed in this blog post: [**Delightful React File/Directory Structure**](https://www.joshwcomeau.com/react/file-structure/).
+
+> **NOTE: This project is not actively maintained.** I continue to use it in my own projects, but I don't have the bandwidth to review PRs or triage issues. I very much encourage forks! Feel free to fork this project and tweak it however you wish. ❤️
 
 <br />
 
@@ -24,6 +26,8 @@ This project is a globally-installable CLI for adding new React components. It's
 - Colourful terminal output!
 
 <br />
+
+> **Version 5:** The new version adds support for TypeScript, and removes support for passing a custom file extension;
 
 ## Quickstart
 
@@ -39,33 +43,29 @@ $ npm i -g new-component
 
 `cd` into your project's directory, and try creating a new component:
 
-<p align="center">
-  <img src="https://github.com/joshwcomeau/new-component/blob/master/docs/demo.gif?raw=true" width="888" height="369" alt="demo of CLI functionality">
-</p>
+```bash
+$ new-component MyNewComponent
+```
 
-Your project will now have a new directory at `src/components/Button`. This directory has two files:
+Your project will now have a new directory at `src/components/MyNewComponent`. This directory has two files:
 
 ```jsx
-// `Button/index.js`
-export { default } from './Button';
+// `MyNewComponent/index.js`
+export { default } from './MyNewComponent';
 ```
 
 ```jsx
-// `Button/Button.js`
-import React, { Component } from 'react';
+// `MyNewComponent/MyNewComponent.js`
+import React from 'react';
 
-class Button extends Component {
-  render() {
-    return <div />;
-  }
+function MyNewComponent() {
+  return <div></div>;
 }
 
-export default Button;
+export default MyNewComponent;
 ```
 
-> This structure might appear odd to you, with an `index.js` that points to a named file. I've found this to be an optimal way to set up components; the `index.js` allows you to `import` from the directory (eg. `import Button from 'components/Button'`), while having `Button.js` means that you're never lost in a sea of `index.js` files in your editor.
->
-> This structure is not currently configurable, but I'm happy to consider implementing alternatives!
+These files will be formatted according to your Prettier configuration.
 
 <br />
 
@@ -83,21 +83,20 @@ The resulting values are merged, with command-line values overwriting local valu
 
 ## API Reference
 
-### Type
+### Language
 
-Control the type of component created:
+Controls which language, JavaScript or TypeScript, should be used.
 
-- `functional` for a stateless functional component (default).
-- `class` for a traditional Component class,
-- `pure-class` for a PureComponent class,
+- `js` — creates a `.js` file (default).
+- `ts` — creates a `.tsx` file.
 
-Legacy `createClass` components are not supported.
+Note that all components created will be functional components. Class components are not supported.
 
 **Usage:**
 
-Command line: `--type <value>` or `-t <value>`
+Command line: `--lang <value>` or `-l <value>`
 
-JSON config: `{ "type": <value> }`
+JSON config: `{ "lang": <value> }`
 <br />
 
 ### Directory
@@ -111,56 +110,17 @@ Command line: `--dir <value>` or `-d <value>`
 JSON config: `{ "dir": <value> }`
 <br />
 
-### File Extension
-
-Controls the file extension for the created components. Can be either `js` (default) or `jsx`.
-
-**Usage:**
-
-Command line: `--extension <value>` or `-x <value>`
-
-JSON config: `{ "extension": <value> }`
-<br />
-
-### Prettier Config
-
-Delegate settings to Prettier, so that your new component is formatted as you'd like. Defaults to Prettier defaults.
-
-For a full list of options, see the [Prettier docs](https://github.com/prettier/prettier#options).
-
-**Usage:**
-
-Command line: N/A (Prettier config is only controllable through JSON)
-
-JSON config: `{ "prettierConfig": { "key": "value" } }`
-<br />
-
-**Example:**
-
-```js
-{
-  "prettierConfig": {
-    "singleQuote": true,
-    "semi": false,
-  }
-}
-```
-
-(Ideally, the plugin would consume your project's prettier settings automatically! But I haven't built this yet. PRs welcome!)
-
-<br />
-
 ## Platform Support
 
-This has only been tested in macOS. I think it'd work fine in linux, but I haven't tested it. Windows is a big question mark (would welcome contribution here!).
-
+This has only been tested in macOS. I think it'd work fine in linux, but I haven't tested it. Windows is a big question mark.
 <br />
 
 ## Development
 
 To get started with development:
 
-- Check out this git repo locally, you will need to ensure you have Yarn installed globally.
-- In the folder run `yarn install`
-- Check that command runs `node ../new-component/src/index.js --help`
-- Alternatively you can set up a symlink override by running `npm link` then `new-component --help`. Note: this will override any globally installed version of this package.
+- Fork and clone the Git repo
+- `cd` into the directory and install dependencies (`yarn install` or `npm install`)
+- Set up a symlink by running `npm link`, while in the `new-component` directory. This will ensure that the `new-component` command uses this locally-cloned project, rather than the global NPM installation.
+- Spin up a test React project.
+- In that test project, use the `new-component` command to create components and test that your changes are working.

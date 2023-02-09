@@ -1,6 +1,6 @@
 {
   "name": "new-component",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "CLI for creating new React components",
   "homepage": "https://github.com/joshwcomeau/new-component",
   "repository": {
@@ -27,8 +27,8 @@
     "new-component": "./src/index.js"
   },
   "dependencies": {
-    "chalk": "^2.4.1",
-    "commander": "^2.15.1",
-    "prettier": "1.5.3"
+    "chalk": "4",
+    "commander": "10",
+    "prettier": "2.8.4"
   }
 }

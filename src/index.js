@@ -2,11 +2,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const program = require('commander');
+const { program } = require('commander');
 
 const {
   getConfig,
   buildPrettifier,
+  createParentDirectoryIfNecessary,
   logIntro,
   logItemCompletion,
   logConclusion,
@@ -34,32 +35,32 @@ program
   .version(version)
   .arguments('<componentName>')
   .option(
-    '-t, --type <componentType>',
-    'Type of React component to generate (default: "functional")',
-    /^(class|pure-class|functional)$/i,
-    config.type
+    '-l, --lang <language>',
+    'Which language to use (default: "js")',
+    /^(js|ts)$/i,
+    config.lang
   )
   .option(
     '-d, --dir <pathToDirectory>',
     'Path to the "components" directory (default: "src/components")',
     config.dir
   )
-  .option(
-    '-x, --extension <fileExtension>',
-    'Which file extension to use for the component (default: "js")',
-    config.extension
-  )
   .parse(process.argv);
 
 const [componentName] = program.args;
 
+const options = program.opts();
+
+const fileExtension = options.lang === 'js' ? 'js' : 'tsx';
+const indexExtension = options.lang === 'js' ? 'js' : 'ts';
+
 // Find the path to the selected template file.
-const templatePath = `./templates/${program.type}.js`;
+const templatePath = `./templates/main.js`;
 
 // Get all of our file paths worked out, for the user's project.
-const componentDir = `${program.dir}/${componentName}`;
-const filePath = `${componentDir}/${componentName}.${program.extension}`;
-const indexPath = `${componentDir}/index.${program.extension}`;
+const componentDir = `${options.dir}/${componentName}`;
+const filePath = `${componentDir}/${componentName}.${fileExtension}`;
+const indexPath = `${componentDir}/index.${indexExtension}`;
 
 // Our index template is super straightforward, so we'll just inline it for now.
 const indexTemplate = prettify(`\
@@ -67,7 +68,11 @@ export * from './${componentName}';
 export { default } from './${componentName}';
 `);
 
-logIntro({ name: componentName, dir: componentDir, type: program.type });
+logIntro({
+  name: componentName,
+  dir: componentDir,
+  lang: options.lang,
+});
 
 // Check if componentName is provided
 if (!componentName) {
@@ -77,14 +82,9 @@ if (!componentName) {
   process.exit(0);
 }
 
-// Check to see if a directory at the given path exists
-const fullPathToParentDir = path.resolve(program.dir);
-if (!fs.existsSync(fullPathToParentDir)) {
-  logError(
-    `Sorry, you need to create a parent "components" directory.\n(new-component is looking for a directory at ${program.dir}).`
-  );
-  process.exit(0);
-}
+// Check to see if the parent directory exists.
+// Create it if not
+createParentDirectoryIfNecessary(options.dir);
 
 // Check to see if this component has already been created
 const fullPathToComponentDir = path.resolve(componentDir);
