@@ -14,7 +14,7 @@ This project is a CLI tool that allows you to quickly scaffold new components. A
 
 This project uses an opinionated file structure discussed in this blog post: [**Delightful React File/Directory Structure**](https://www.joshwcomeau.com/react/file-structure/).
 
-> **NOTE: This project is not actively maintained.** I continue to use it in my own projects, but I don't have the bandwidth to review PRs or triage issues. I very much encourage forks! Feel free to fork this project and tweak it however you wish. ❤️
+> **NOTE: This project is not actively maintained.** I continue to use it in my own projects, but I don't have the bandwidth to review PRs or triage issues. Feel free to fork this project and tweak it however you wish. ❤️
 
 <br />
 
