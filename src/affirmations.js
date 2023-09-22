@@ -38,5 +38,8 @@ module.exports = [
   'Turn up the jam. 🔊',
   'You belong in this world ❤️',
   'Live your best life ❤️',
-  "Wherever it takes me, I'm down for the ride. 🎶",
+  `Wherever it takes me, I'm down for the ride. 🎶`,
+  `I'm a survivor, I'm not gon' give up. 🎶`,
+  `You are a champion. 🏆`,
+  `Get that churro 🥨`,
 ];
