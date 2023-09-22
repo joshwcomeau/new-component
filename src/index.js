@@ -14,7 +14,6 @@ const {
   logError,
 } = require('./helpers');
 const {
-  requireOptional,
   mkDirPromise,
   readFilePromiseRelative,
   writeFilePromise,
@@ -51,7 +50,7 @@ const [componentName] = program.args;
 
 const options = program.opts();
 
-const fileExtension = options.lang === 'js' ? 'js' : 'tsx';
+const fileExtension = options.lang === 'js' ? 'jsx' : 'tsx';
 const indexExtension = options.lang === 'js' ? 'js' : 'ts';
 
 // Find the path to the selected template file.
@@ -114,7 +113,7 @@ mkDirPromise(componentDir)
     logItemCompletion('Component built and saved to disk.');
     return template;
   })
-  .then((template) =>
+  .then(() =>
     // We also need the `index.js` file, which allows easy importing.
     writeFilePromise(indexPath, prettify(indexTemplate))
   )
@@ -122,7 +121,7 @@ mkDirPromise(componentDir)
     logItemCompletion('Index file built and saved to disk.');
     return template;
   })
-  .then((template) => {
+  .then(() => {
     logConclusion();
   })
   .catch((err) => {
