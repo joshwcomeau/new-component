@@ -1,6 +1,6 @@
 {
   "name": "new-component-churro",
-  "version": "5.0.2",
+  "version": "5.1.1",
   "description": "CLI for creating new React components",
   "homepage": "https://github.com/joshwcomeau/new-component",
   "repository": {
