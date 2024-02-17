@@ -27,8 +27,10 @@
     "new-component": "./src/index.js"
   },
   "dependencies": {
+    "-": "^0.0.1",
     "chalk": "4",
     "commander": "10",
+    "D": "^1.0.0",
     "prettier": "2.8.4"
   }
 }

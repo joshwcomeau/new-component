@@ -1,0 +1,1 @@
+export { COMPONENT_NAME_CAP } from "./COMPONENT_NAME";
