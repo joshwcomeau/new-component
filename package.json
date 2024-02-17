@@ -1,6 +1,6 @@
 {
   "name": "new-component-churro",
-  "version": "5.1.1",
+  "version": "5.2.0",
   "description": "CLI for creating new React components",
   "homepage": "https://github.com/joshwcomeau/new-component",
   "repository": {
@@ -24,7 +24,7 @@
   "author": "Joshua Comeau",
   "license": "MIT",
   "bin": {
-    "new-component": "./src/index.js"
+    "new-component-churro": "./src/index.js"
   },
   "dependencies": {
     "-": "^0.0.1",
