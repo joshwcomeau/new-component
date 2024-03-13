@@ -46,7 +46,8 @@ program
   )
   .parse(process.argv);
 
-const componentName = program.args[0].toLowerCase();
+const componentName =
+  program.args[0].charAt(0).toLowerCase() + program.args[0].slice(1);
 
 const options = program.opts();
 
@@ -62,7 +63,6 @@ const indexTemplatePath = `./templates/index.js`;
 const componentDir = `${options.dir}/${componentName}`;
 const filePathComponent = `${componentDir}/${componentName}.${fileExtension}`;
 const filePathIndex = `${componentDir}/index.${fileExtension}`;
-const indexPath = `${componentDir}/index.${indexExtension}`;
 
 logIntro({
   name: componentName,
