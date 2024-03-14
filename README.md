@@ -51,12 +51,12 @@ Your project will now have a new directory at `src/components/MyNewComponent`. T
 
 ```jsx
 // `MyNewComponent/index.js`
-export { default } from './MyNewComponent';
+export { default } from "./MyNewComponent";
 ```
 
 ```jsx
 // `MyNewComponent/MyNewComponent.js`
-import React from 'react';
+import React from "react";
 
 function MyNewComponent() {
   return <div></div>;
@@ -124,3 +124,13 @@ To get started with development:
 - Set up a symlink by running `npm link`, while in the `new-component` directory. This will ensure that the `new-component` command uses this locally-cloned project, rather than the global NPM installation.
 - Spin up a test React project.
 - In that test project, use the `new-component` command to create components and test that your changes are working.
+
+# Example
+
+```tsx
+import { Test } from "./components/test";
+
+<Test />;
+```
+
+Maybe add a default vs named options

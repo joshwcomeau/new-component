@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const { program } = require('commander');
+const { program } = require("commander");
 
 const {
   getConfig,
@@ -11,17 +11,16 @@ const {
   logIntro,
   logItemCompletion,
   logConclusion,
-  logError,
-} = require('./helpers');
+  logError
+} = require("./helpers");
 const {
-  requireOptional,
   mkDirPromise,
   readFilePromiseRelative,
-  writeFilePromise,
-} = require('./utils');
+  writeFilePromise
+} = require("./utils");
 
 // Load our package.json, so that we can pass the version onto `commander`.
-const { version } = require('../package.json');
+const { version } = require("../package.json");
 
 // Get the default config for this component (looks for local/global overrides,
 // falls back to sensible defaults).
@@ -33,45 +32,42 @@ const prettify = buildPrettifier(config.prettierConfig);
 
 program
   .version(version)
-  .arguments('<componentName>')
+  .arguments("<componentName>")
   .option(
-    '-l, --lang <language>',
+    "-l, --lang <language>",
     'Which language to use (default: "js")',
     /^(js|ts)$/i,
     config.lang
   )
   .option(
-    '-d, --dir <pathToDirectory>',
+    "-d, --dir <pathToDirectory>",
     'Path to the "components" directory (default: "src/components")',
     config.dir
   )
   .parse(process.argv);
 
-const [componentName] = program.args;
+const componentName =
+  program.args[0].charAt(0).toLowerCase() + program.args[0].slice(1);
 
 const options = program.opts();
 
-const fileExtension = options.lang === 'js' ? 'js' : 'tsx';
-const indexExtension = options.lang === 'js' ? 'js' : 'ts';
+console.log(options);
+const fileExtension = options.lang === "js" ? "jsx" : "tsx";
+const indexExtension = options.lang === "js" ? "js" : "ts";
 
 // Find the path to the selected template file.
-const templatePath = `./templates/${options.lang}.js`;
+const componentTemplatePath = `./templates/component.js`;
+const indexTemplatePath = `./templates/index.js`;
 
 // Get all of our file paths worked out, for the user's project.
 const componentDir = `${options.dir}/${componentName}`;
-const filePath = `${componentDir}/${componentName}.${fileExtension}`;
-const indexPath = `${componentDir}/index.${indexExtension}`;
-
-// Our index template is super straightforward, so we'll just inline it for now.
-const indexTemplate = prettify(`\
-export * from './${componentName}';
-export { default } from './${componentName}';
-`);
+const filePathComponent = `${componentDir}/${componentName}.${fileExtension}`;
+const filePathIndex = `${componentDir}/index.${fileExtension}`;
 
 logIntro({
   name: componentName,
   dir: componentDir,
-  lang: options.lang,
+  lang: options.lang
 });
 
 // Check if componentName is provided
@@ -95,36 +91,48 @@ if (fs.existsSync(fullPathToComponentDir)) {
   process.exit(0);
 }
 
-// Start by creating the directory that our component lives in.
 mkDirPromise(componentDir)
-  .then(() => readFilePromiseRelative(templatePath))
-  .then((template) => {
-    logItemCompletion('Directory created.');
+  .then(() => readFilePromiseRelative(componentTemplatePath))
+  .then(template => {
+    logItemCompletion("Directory created.");
     return template;
   })
-  .then((template) =>
+  .then(template =>
+    // Replace our placeholders with real data (so far, just the component name)
+    template.replace(
+      /COMPONENT_NAME_CAP/g,
+      componentName[0].toUpperCase() + componentName.slice(1)
+    )
+  )
+  .then(template =>
+    // Format it using prettier, to ensure style consistency, and write to file.
+    writeFilePromise(filePathComponent, prettify(template))
+  )
+  .then(() => {
+    logItemCompletion("Component built and saved to disk.");
+  })
+  .then(() => readFilePromiseRelative(indexTemplatePath))
+  .then(template =>
+    // Replace our placeholders with real data (so far, just the component name)
+    template.replace(
+      /COMPONENT_NAME_CAP/g,
+      componentName[0].toUpperCase() + componentName.slice(1)
+    )
+  )
+  .then(template =>
     // Replace our placeholders with real data (so far, just the component name)
     template.replace(/COMPONENT_NAME/g, componentName)
   )
-  .then((template) =>
+  .then(template =>
     // Format it using prettier, to ensure style consistency, and write to file.
-    writeFilePromise(filePath, prettify(template))
+    writeFilePromise(filePathIndex, prettify(template))
   )
-  .then((template) => {
-    logItemCompletion('Component built and saved to disk.');
-    return template;
+  .then(() => {
+    logItemCompletion("Index file built and saved to disk.");
   })
-  .then((template) =>
-    // We also need the `index.js` file, which allows easy importing.
-    writeFilePromise(indexPath, prettify(indexTemplate))
-  )
-  .then((template) => {
-    logItemCompletion('Index file built and saved to disk.');
-    return template;
-  })
-  .then((template) => {
+  .then(() => {
     logConclusion();
   })
-  .catch((err) => {
+  .catch(err => {
     console.error(err);
   });
