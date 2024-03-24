@@ -58,3 +58,20 @@ module.exports.readFilePromiseRelative = (fileLocation) =>
 module.exports.sample = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
 };
+
+
+// Convert any word into PascalCase
+module.exports.toPascalCase = (string) => {
+  const anyNonLetterNorDigit = /([^a-zA-Z0-9])+(.)?/g
+  const anySpaceRemained = /[^a-zA-Z\d]/g
+  const uppercaseRegex = /^([A-Z])/
+
+  const capitalize = s => s.charAt(0).toUpperCase() + s.slice(1);
+
+  let camelCase = string
+    .replace(anyNonLetterNorDigit, (_, __, char) => char ? char.toUpperCase() : '')
+    .replace(anySpaceRemained, '')
+    .replace(uppercaseRegex, (word) => word.toLowerCase());
+
+  return capitalize(camelCase)
+}

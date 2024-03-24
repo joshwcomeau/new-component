@@ -18,6 +18,7 @@ const {
   mkDirPromise,
   readFilePromiseRelative,
   writeFilePromise,
+	toPascalCase,
 } = require('./utils');
 
 // Load our package.json, so that we can pass the version onto `commander`.
@@ -47,11 +48,12 @@ program
   )
   .parse(process.argv);
 
-const [componentName] = program.args;
+const [componentNameRaw] = program.args;
+const componentName = toPascalCase(componentNameRaw)
 
 const options = program.opts();
 
-const fileExtension = options.lang === 'js' ? 'js' : 'tsx';
+const fileExtension = options.lang === 'js' ? 'jsx' : 'tsx';
 const indexExtension = options.lang === 'js' ? 'js' : 'ts';
 
 // Find the path to the selected template file.
