@@ -53,7 +53,7 @@ const componentName = toPascalCase(componentNameRaw)
 
 const options = program.opts();
 
-const fileExtension = options.lang === 'js' ? 'js' : 'tsx';
+const fileExtension = options.lang === 'js' ? 'jsx' : 'tsx';
 const indexExtension = options.lang === 'js' ? 'js' : 'ts';
 
 // Find the path to the selected template file.

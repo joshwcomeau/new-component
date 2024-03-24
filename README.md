@@ -87,7 +87,7 @@ The resulting values are merged, with command-line values overwriting local valu
 
 Controls which language, JavaScript or TypeScript, should be used.
 
-- `js` — creates a `.js` file (default).
+- `js` — creates a `.jsx` file (default).
 - `ts` — creates a `.tsx` file.
 
 Note that all components created will be functional components. Class components are not supported.
