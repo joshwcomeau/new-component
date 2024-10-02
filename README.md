@@ -115,6 +115,16 @@ JSON config: `{ "dir": <value> }`
 This has only been tested in macOS. I think it'd work fine in linux, but I haven't tested it. Windows is a big question mark.
 <br />
 
+## Known Issues
+
+If you try to use this package with the Next.js App Router, you’ll run into an error:
+
+```md
+**Syntax error:** the name `default` is exported multiple times
+```
+
+This issue is described in depth in [my blog post about this package](https://joshwcomeau.com/react/file-structure/#issues-with-the-app-router). To solve this problem, you’ll need to fork this library and remove [the wildcard export](https://github.com/joshwcomeau/new-component/blob/main/src/index.js#L67).
+
 ## Development
 
 To get started with development:
