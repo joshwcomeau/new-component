@@ -87,10 +87,10 @@ The resulting values are merged, with command-line values overwriting local valu
 
 Controls which language, JavaScript or TypeScript, should be used.
 
-- `js` — creates a `.js` file (default).
+- `js` — creates a `.jsx` file (default).
 - `ts` — creates a `.tsx` file.
 
-Note that all components created will be functional components. Class components are not supported.
+As of Version 6, JavaScript files always have the `.jsx` extension, since Vite doesn’t tolerate JSX inside `.js` files. If you wish to keep generating `.js` files, you can use Version 5, or fork this project and change [this line](https://github.com/joshwcomeau/new-component/blob/main/src/index.js#L54).
 
 **Usage:**
 
