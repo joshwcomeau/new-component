@@ -1,6 +1,6 @@
 {
   "name": "new-component",
-  "version": "5.0.3",
+  "version": "6.0.0",
   "description": "CLI for creating new React components",
   "homepage": "https://github.com/joshwcomeau/new-component",
   "repository": {
