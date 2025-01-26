@@ -18,6 +18,7 @@ const {
   mkDirPromise,
   readFilePromiseRelative,
   writeFilePromise,
+	toPascalCase,
 } = require('./utils');
 
 // Load our package.json, so that we can pass the version onto `commander`.
@@ -47,7 +48,8 @@ program
   )
   .parse(process.argv);
 
-const [componentName] = program.args;
+const [componentNameRaw] = program.args;
+const componentName = toPascalCase(componentNameRaw)
 
 const options = program.opts();
 
