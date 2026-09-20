@@ -36,8 +36,8 @@ program
   .arguments('<componentName>')
   .option(
     '-l, --lang <language>',
-    'Which language to use (default: "js")',
-    /^(js|ts)$/i,
+    'Which language to use (default: "ts")',
+    /^(ts|js)$/i,
     config.lang
   )
   .option(

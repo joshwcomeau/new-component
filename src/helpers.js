@@ -31,7 +31,7 @@ module.exports.getConfig = () => {
   const currentPath = process.cwd();
 
   const defaults = {
-    lang: 'js',
+    lang: 'ts',
     dir: 'src/components',
   };
 
