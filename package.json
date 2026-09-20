@@ -5,7 +5,7 @@
   "homepage": "https://github.com/joshwcomeau/new-component",
   "repository": {
     "type": "git",
-    "url": "https://github.com/joshwcomeau/new-component"
+    "url": "git+https://github.com/joshwcomeau/new-component.git"
   },
   "bugs": {
     "url": "https://github.com/joshwcomeau/new-component/issues"
@@ -24,7 +24,7 @@
   "author": "Joshua Comeau",
   "license": "MIT",
   "bin": {
-    "new-component": "./src/index.js"
+    "new-component": "src/index.js"
   },
   "dependencies": {
     "chalk": "4",
